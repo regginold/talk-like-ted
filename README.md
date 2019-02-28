@@ -12,7 +12,21 @@ This repository contains code to generate a web app that helps people give bette
 
 ### Word usage
 
+<video width="744" height="466" autoplay loop>
+    <source src="examples/interactive_transcript.mp4" type="video/mp4">
+</video>
+
+### Pace over time
+
+<video width="744" height="466" autoplay loop>
+    <source src="examples/speed_dt.mp4" type="video/mp4">
+</video>
+
 ### Topic Modeling
+
+<video width="744" height="466" autoplay loop>
+    <source src="examples/topic_modeling.mp4" type="video/mp4">
+</video>
 
 ## Installation
 
