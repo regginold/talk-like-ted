@@ -434,7 +434,7 @@ def contact():
 if __name__ == '__main__':
     socketio.run(
         app,
-        debug=True,
+        debug=app.config['DEBUG'],
         host=app.config['HOST'],
-        port=8000
+        port=app.config['PORT']
     )

@@ -12,6 +12,7 @@ class BaseConfig(object):
         'content="upgrade-insecure-requests">')
     LOAD_FAKE_USER_DATA = False
     HOST = '0.0.0.0'
+    PORT = 8000
 
 
 class Dev(BaseConfig):
