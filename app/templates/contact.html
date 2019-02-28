@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}Contact{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.js'></script>
+    {{ upgrade_insecure_requests }}
+{% endblock %}
+
+{% block content %}
+<div class='modal' id='expandable-image-modal' tabindex='-1' role='dialog'> 
+    <div class='modal-dialog' role='document'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>
+                    <p><span id='expandable-image-modal-close'>&times;</span></p>
+                </button>
+            </div>
+            <div class='modal-body' id='expandable-image-insert'>. placeholder text .</div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <h1 style='text-align: center; padding-top:15px;'>Ross McKinney</h1>
+    </div>
+    <div class="col-md-3" style='text-align: center;'>
+        <img class='expandable-image' src='../static/img/casual-headshot-compressed.jpg' width="45%"/>
+    </div>
+</div>
+
+<hr style='width:25%'>
+
+<div class="row contact-row-first">
+    <div class="col-md-3 contact-section-label">Github</div>
+    <div class="col-md-6">
+        <p><a href='http://github.com/regginold'>regginold</a></p>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 contact-section-label">Phone</div>
+    <div class="col-md-6">
+        <p>(314) 960&ndash;9415</p>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 contact-section-label">Email</div>
+    <div class="col-md-6">
+        <p>ross.mckinney@mg.thedataincubator.com</p>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<div class="row contact-row-first">
+    <div class="col-md-3 contact-section-label">About</div>
+    <div class="col-md-6">
+        <p>
+            I'm currently a graduate student at Washington University in St. Louis,
+            where I'm studying how neural circuits regulate behavior. During my 
+            time here, I've developed several pieces of software to help biologists
+            track the positions and postures of animals and use this information to
+            make accurate predictions about their behavioral states.
+
+            Along with an interest in using data to better understand behavior,
+            I also enjoy making interesting, interactive, and user-friendly data
+            visualizations.
+        </p>
+        <p>
+            During my free time, I'm often found outdoors rock climbing and hiking.
+        </p>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<!-- <div class="row contact-row-first">
+    <div class="col-md-3 contact-section-label">Resume</div>
+    <div class="col-md-6">
+        <p><a href='../static/img/resume.pdf'>.pdf</a></p>
+    </div>
+    <div class="col-md-3"></div>
+</div> -->
+<div class="row contact-row-first">
+    <div class="col-md-3 contact-section-label">Acknowledgements</div>
+    <div class="col-md-6">
+        <p>
+            This project was sponsored by <a href='https://www.cerego.com/'>Cerego</a>,
+            and I'm grateful for the support of their data science team, especially 
+            Iain and Archana.
+        </p>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+{% endblock %}
+
+{% block footer_content_center %}
+<div style='text-align: center;'>
+    <p>
+        <h4>
+            <a href='https://spoken-presentation-feedback.herokuapp.com/'>
+                spoken-presentation-feedback.herokuapp.com
+            </a>
+        </h4>
+    </p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src='../static/js/expandable-image-modal.js'></script>
+{% endblock %}

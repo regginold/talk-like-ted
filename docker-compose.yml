@@ -1,0 +1,10 @@
+version: '0.1'
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+    environment:
+      PYTHONUNBUFFERED: 'true'
+    ports:
+      - "8000:8000"

@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}Example{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.js'></script>
+    {{ upgrade_insecure_requests }}
+{% endblock %}
+
+{% block content %}
+
+<!-- NAVIGATION MODAL -->
+<div id='text-analysis-nav-modal'>
+    <img src='static/img/hamburger-menu.png' id='hamburger-menu'>
+    <br><br>
+    <ul>
+        <li><a class='text-list-item' data-link-target='#page-top'>(top of page)</a></li>
+        <li><a class='text-list-item' data-link-target='#completed-transcript-div'>How often did I use a word?</a></li>
+        <li><a class='text-list-item' data-link-target='#speed-dt-plot'>How fast was I speaking over time?</a></li>
+        <li><a class='text-list-item' data-link-target='#topic-modeling-plots'>What topics did I cover?</a></li>
+        <!-- <li><a class='text-list-item' data-link-target='#completed-transcript-div'>How fast was I speaking during each topic?</a></li> -->
+    </ul>
+</div>
+
+<!-- MODAL FOR SHOWING TRANSCRIPT TEXT WITHIN RUNNING AVG PLOT -->
+<div id='running-avg-tooltip-modal'> 
+    <p style='text-align: right;'><span id='tooltip-modal-close'>&times;</span></p>
+    <pre id='tooltip-transcript-text'>... transcript text ...</pre>
+    <p style='text-align: center'><a id='see-transcript-from-speed'>See in transcript</a></p>
+</div>
+
+
+<!-- Introduction -->
+<div id='practice-presenting'>
+<div class='row' id='page-top'>
+    <div class='col-md-3'>
+    </div>
+    <div class='col-md-6 center-block text-center'>
+        <h4>Example Output</h4>
+
+        <p>
+            This page shows this app's example output for a presentation by Aala El-Khani in her
+            TED talk <a href="https://www.ted.com/talks/aala_el_khani_what_it_s_like_to_be_a_parent_in_a_war_zone">
+            "What it's like to be a parent in a war zone"</a>.
+        </p>
+    </div>
+    <div class='col-md-3'>
+    </div>
+</div>
+
+<hr style='width: 25%;'>
+
+<!-- Transcript & commonly used words. -->
+<div class='row plot-row plot-row-first'>
+    <div class='col-md-3 col-left'>
+        <div class='section-label'>
+            <strong>Transcript &amp; Word Usage</strong>
+            <em>
+                <p>Click on any word in your transcript to see how often it was
+                spoken, click on the bars to the right to see where your most 
+                frequently used words appeared.</p>
+            </em>
+        </div>
+    </div>
+    <div class='col-md-6 center-block text-center'>
+        <!-- This is where the streaming transcript will show up, on record. -->
+        <div id='streaming-transcript-div'>
+            <p id='streaming-transcript'> Transcript text will appear here. </p>
+        </div>
+
+        <!-- The streaming transcript will be emptied, and the completed transcript
+            will show up here when the recording has finished. The transcript shown
+            here will be linked to the 'completed-transcript-div' d3.js plot. -->
+        <div id='completed-transcript-div'>
+            <p id='completed-interactive-transcript'></p>
+        </div>
+    </div>
+    <div class='col-md-3'>
+        <div id='completed-transcript-plots'>
+            <p style='padding-top: 5px'>Most Commonly Used Words</p>
+            <div id='most-common-words-plot'><svg></svg></div>
+            <p style='padding-top: 5px'>Most Common Non-Stop Words</p>
+            <div id='tf-idf-words-plot'><svg></svg></div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class='row plot-row plot-row-secondary'>
+    <div class='col-md-3 col-left'>
+        <div class='section-label'>
+            <strong>Speaking Speed</strong>
+            <p><em>This plot shows your speaking speed over time. Use the slider
+                to change the bin size used to determine speed. You can also click
+                on each of the points to see where you changed speed within the 
+                transcript above.
+            </em></p>
+        </div>
+    </div>
+    <div class='col-md-6'>
+        <div id='speed-plot-and-annotations'>
+            <div id='speed-bin-div'>
+                <p>Bin size <span id='current-wpm-slider-val'></span> (sec) </p>
+                <input type='range' id='speed-bin-slider' list='wpm-slider-bin-values'>
+                <datalist id='wpm-slider-bin-values'></datalist>
+            </div>
+            <div class='mid' id='speed-dt-plot'><svg></svg></div>
+            <div style='text-align: center'><p>Time <span style='font-size: 25pt'> &rarr; </span></p></div>
+        </div>
+    </div>
+    <div class='col-md-3'></div>
+</div>
+
+<hr>
+
+<div class='row plot-row plot-row-secondary' id='topic-modeling-plots'>
+    <div class='col-md-3 col-left'>
+        <div class='section-label'>
+            <strong>Topics</strong>
+            <p><em>
+                This plot shows you the different topics you covered during your talk, 
+                and the proportion of time you spent in each topic.
+            </em></p>
+        </div>
+    </div>
+    <div class='col-md-6'>
+        <div id='lda-plots'>
+            <div class='graph-titles'>
+                <div id='topic-graph-1-title'>Proportion of Time in each Topic</div>
+                <div id='topic-graph-2-title'><span id='current_topic'></span></div>
+            </div>
+            <div class='graphs'>
+                <div class="topic-graphic-1" id="topic-bubble-chart">
+                    <svg></svg>
+                </div>
+                <div class="topic-graphic-2" id="topic-bar-chart">
+                    <svg></svg>
+                </div>
+            </div>
+            <div id='form_slider'>
+                <p id='n_topics_display'> Number of Topics: <span id='current_num_topics'>5</span></p>
+                <form id="update" method="POST" action="#">
+                    <input type="range" min="1" max="9" value="5" id="num_topics" class="slider">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class='col-md-3'>
+        <div class='section-label'>
+            <p style='text-align: left;'><em>
+                <strong>Bubble Chart.</strong> The size of each bubble represents the 
+                proportion of time you spent in each topic.
+            </em></p>
+            <p style='text-align: left;'><em>
+                <strong>Bar Chart.</strong> The bars show the frequency of word usage
+                within each topic.
+            </em></p>
+            <p style='text-align: left;'><em>
+                <strong>Slider.</strong> Use the slider beneath the plots to change the 
+                number of topics you were talking about.
+            </em></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src='../static/js/example-sockets.js'></script>
+<script src='../static/js/interactive_transcript.js'></script>
+<script src='../static/js/wpm_running_avg_chart.js'></script>
+<script src='../static/js/topic_modeling_charts.js'></script>
+{% endblock %}

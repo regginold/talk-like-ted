@@ -1,0 +1,10 @@
+gunicorn
+requests
+flask-socketio
+dill
+numpy
+scipy
+scikit-learn
+flask
+google-cloud-speech
+eventlet

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+        <title>{% block title %}{% endblock %}</title>
+
+        <!-- bootstrap/jquery -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../static/css/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+        <!-- socket io -->
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+        {% endblock %}
+    </head>
+    <body style='padding-top:75px'>
+
+        <nav class='navbar navbar-default navbar-fixed-top' role='navigation'>
+            <div class='container'>
+                <div class='navbar-header'></div>
+                <div class='collapse navbar-collapse'>
+                    <ul class='nav navbar-nav'>
+                        <li><a href="{{ url_for('stream') }}">Practice</a></li>
+                        <li><a href="{{ url_for('example') }}">Example</a></li>
+                        <!-- <li><a href="">Topics</a></li> -->
+                        <li><a href="{{ url_for('about') }}">About</a></li>
+                        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class='container'>
+            {% block content %}
+            {% endblock %}
+
+            <footer class='page-footer' id='footer'>
+                <hr>
+                <div class='row'>
+                    <div class='col-md-3'>{% block footer_content_left %}{% endblock %}</div>
+                    <div class='col-md-6'>{% block footer_content_center %}{% endblock %}</div>
+                    <div class='col-md-3'>{% block footer_content_right %}{% endblock %}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-3'></div>
+                    <div class='col-md-6'></div>
+                    <div class='col-md-3' style='text-align: center;'>&copy; Ross McKinney, 2019</div>
+                </div>
+            </footer>
+        </div>
+
+    <!-- bootstrap/jquery -->
+    {% block scripts %}
+    {% endblock %}
+    <script>
+        $(document).ready(function(){
+            var footer = $('#footer');
+            var windowHeight = $(window).height();
+            var footerHeight = footer.height();
+            var footerTop = footer.position().top + footerHeight;
+
+            if (footerTop < windowHeight) {
+                footer.css('margin-top', 20 + (windowHeight - footerTop) + 'px');
+            }
+        });
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </body>
+</html>

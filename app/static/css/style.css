@@ -1,0 +1,289 @@
+
+.graphs {
+    display: flex;
+    justify-content: space-around;
+}
+
+.graph-titles {
+    display: flex;
+    justify-content: space-around;
+}
+
+.topic-graphic-1 {
+    border-color: rgb(20, 2, 2);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+}
+
+.topic-graphic-2 {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+    width: 25%;
+}
+
+.bubble-active {
+    stroke-width: 5;
+}
+
+.bubble-inactive {
+    stroke-width: 0;
+}
+
+#current_num_topics {
+    font-weight: bold;
+}
+
+#n_topics_display {
+    text-align: left;
+}
+
+.bar-user {
+    fill: red;
+}
+
+.bar-ted {
+    fill: black;
+}
+
+#form_slider {
+    margin-top: 20px;
+}
+
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+  }
+  
+  /* Mouse-over effects */
+  .slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: rgb(3, 51, 97); /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+
+.mid {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    background-color: white;
+    justify-content: center;
+    border-radius: 10px;
+    justify-content: center;
+}
+
+#timerVisualization {
+    background-color:black;
+    height: 100px;
+    margin-top: 20px;
+    border-radius: 5%;
+    vertical-align: center;
+    margin-right: 1px;
+    display: flex;
+    flex-direction: column;
+}
+
+#audioVisualization {
+    background-color: black;
+    height: 100px;
+    margin-top: 20px;
+    border-radius: 5%;
+    vertical-align: center;
+    margin-left: 1px;
+    display: flex;
+    flex-direction: column;
+}
+
+#audioRecorder {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+#recordButtonImage {
+    height: 50px;
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2px;
+}
+
+#text-analysis-nav-modal {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    width: 200px;
+    height: 260px;
+    overflow: hidden;
+    background-color: white;
+    transform: translate(-500px, 50px);
+    border-radius:5%;
+    transition-timing-function: ease-in;
+    transition: 0.2s;
+    margin-right: 5px;
+}
+
+#completed-transcript-modal {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    width: 160px;
+    height: 260px;
+    overflow: auto;
+    background-color: white;
+    transform: translate(+500px, 0);
+    border-radius:5%;
+    /* transition-timing-function: ease-in;
+    transition: 0.2s; */
+}
+
+#completed-transcript-plots {
+    display: none;
+    position: relative;
+}
+
+.section-label {
+    text-align: center;
+    display: none;
+}
+
+#hamburger-menu {
+    height: 20px;
+    width: 20px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+#speed-bin-div {
+    text-align: center;
+}
+
+#speed-bin-slider {
+    width: 200px;
+    margin: 0 auto;
+}
+
+#current-wpm-slider-val {
+    font-weight: bold;
+}
+
+.running-wpm-line {
+    fill: none;
+    stroke: rgb(255, 36, 0);
+    stroke-width: 3;
+}
+
+#speed-dt-plot {
+    text-align: center;
+    display: inline-block;
+    padding-bottom: 50;
+}
+
+svg {
+    margin: 5px;
+}
+
+.running-avg-tooltip {
+    position: absolute;
+    z-index: 10;
+    visibility: hidden;
+    width: 250px;
+    height: 50px;
+    overflow-x: auto;
+    background-color: white;
+    border-color: black;
+    opacity: 0.9;
+    border-radius: 2%;
+    color: black;
+}
+
+#running-avg-tooltip-modal {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    width: 300px;
+    height: 120px;
+    background-color: white;
+    border-color: black;
+    border-style: solid;
+    border-radius: 5%;
+    border-width: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.plot-row {
+    margin-bottom: 100px;
+}
+
+.plot-row-secondary {
+    margin-top: 100px;
+}
+
+#lda-plots {
+    display: none;
+}
+
+#speed-plot-and-annotations {
+    display: none;
+}
+
+.about-section {
+    padding-top: 50px;
+}
+
+.about-image {
+    text-align: center;
+}
+
+.image-legend {
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.about-line-break {
+    width: 20%;
+}
+
+.contact-section-label {
+    text-align: right;
+    font-weight: bold;
+}
+
+.contact-row-first {
+    margin-top: 30px;
+}
+
+#footer {
+    height: 100px;
+}
+
+#expandable-image-modal {
+    width: 100%;
+}

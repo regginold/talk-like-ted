@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.js'></script>
+    {{ upgrade_insecure_requests }}
+{% endblock %}
+
+{% block content %}
+<div class='modal' id='expandable-image-modal' tabindex='-1' role='dialog'> 
+    <div class='modal-dialog' role='document'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>
+                    <p><span id='expandable-image-modal-close'>&times;</span></p>
+                </button>
+            </div>
+            <div class='modal-body' id='expandable-image-insert'>. placeholder text .</div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <h4 style="text-align: center">How does this app work?</h4>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<div class="row about-section">
+    <div class="col-md-3" style="text-align: center;"><strong>Streaming</strong></div>
+    <div class="col-md-6">
+        <p>
+            This app uses the 
+            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API">
+                Web Audio API
+            </a>
+            to capture sound from the user&rsquo;s microphone. Subsequently, this audio
+            is streamed to the 
+            <a href="https://cloud.google.com/speech-to-text/">
+                Google Speech API
+            </a>
+            &mdash; using Python, Flask, and SocketIO on the backend &mdash; where the user&rsquo;s spoken 
+            word is transcribed to text.
+        </p>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<hr class='about-line-break'>
+
+<div class="row about-section">
+    <div class="col-md-3" style="text-align: center;"><strong>Word Frequency</strong></div>
+    <div class="col-md-6">
+        <p>
+            Once the user has finished speaking, the most commonly used words are
+            displayed in an interactive transcript. As certain words appear more 
+            often in the English language (such as &ldquo;the&rdquo;, &ldquo;a&rdquo;, and &ldquo;in&rdquo;), these
+            words will likely represent a majority of the displayed words. While
+            these words &mdash; referred to as STOP words &mdash; often do not impart significant
+            meaning onto the semantics of the sentence, they can still be useful 
+            indicators of overused words during a spoken presentation, and are 
+            thus presented to the user. The most common non-STOP words are also 
+            displayed to give the user a sense of (possibly) overused words that
+            do impart meaning onto a sentence.
+        </p>
+        <p>
+            The user can also examine his/her average speaking speed over time
+            and determine where within the transcript the speed changed. This 
+            should allow the user to identify regions of the talk that were difficult
+            to articulate and focus their efforts on preparing this region
+            of the presentation.
+        </p>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<hr class='about-line-break'>
+
+<div class="row about-section">
+    <div class="col-md-3" style="text-align: center;"><strong>Topic Modeling</strong></div>
+    <div class="col-md-6">
+        <p>
+            In order to determine the topics that a user covered during his/her
+            talk, the talk was first split into <em>thoughts</em>. Each thought was 
+            defined as a period of speech which was surrounded by pauses longer than 
+            ~1 second in length. The specific pause length was determined using 
+            KMeans clustering to parse all pauses within the speech into two groups 
+            &mdash; short and long &mdash; and chunks of speech surrounded by long pauses 
+            were labeled as independent thoughts (see below).
+        </p>
+        <p class="about-image">
+            <img class='expandable-image' src='../static/img/pause-threshold-hist.png' height="250px" width="400px"/>
+            <div class='image-legend'>
+                <strong>Fig 1.</strong> This plot shows the distribution of all 
+                pause lengths between individual words in a speech. The dotted red
+                line shows the threshold defining the boundary between short and 
+                long pauses in a given speech (identified via KMeans clustering).
+            </div>
+        </p>
+
+        <p class='about-image'>
+            <img class='expandable-image' src='../static/img/audio-pauses-annotated.png' height="250px" width="400px"/>
+            <div class='image-legend'>
+                <strong>Fig 2.</strong> Thoughts can be parsed by identifying
+                the speech occuring between two long pauses (P<sub>1</sub> and P<sub>2</sub>).
+                The blue trace is the raw audio signal.
+            </div>
+        </p>
+        <p>
+            Subsequently, the text from each thought was used as an independent document
+            in a <strong>Latent Dirichlet Allocation (LDA)</strong> analysis.
+        </p>
+        <p>
+            In an LDA analysis, each document is labeled with a mixture of topics
+            that have been identified using a probablistic model. The probablistic
+            model is generated by determining words that are most likely to be found
+            within a given topic, and resulting topics are often skewed towards specific words, 
+            such that each topic may be defined by a limited number of words.
+        </p>
+        <p>
+            Using the topic mixtures for each document (remember that each document 
+            is a user&rsquo;s <em>thought</em>), we identify the topic that contributes
+            the most to that thought. We can use this information to calculate
+            the fraction of time that the user spent in each topic during the speech,
+            and display this information.
+        </p>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<div class="row about-section">
+    <div class="col-md-3" style="text-align: center;"><strong>Future Steps</strong></div>
+    <div class="col-md-6">
+        <p>
+            Currently this app is focused on giving users feedback on their most commonly used words,
+            speaking pace, and the duration and types of topics mentioned during 
+            their speech. Here's some of the other features that are currently being
+            implemented:
+        </p>
+        <ol>
+            <li>
+                Speakers tend to overuse filler words, including <em>um</em>,
+                <em>like</em>, <em>so</em>, etc. While some of these words are included
+                in the word count graphs, the word <em>um</em> is filtered by the 
+                Google Speech API. I'm currently working to identify usages of 
+                <em>um</em> by identifying areas of audio that contained some 
+                non-negligable amount of signal, but which were not identified
+                by Google Speech as containing a word, and displaying these areas
+                of audio to the user. An alternative would be to build a classifier that 
+                specifically identifies <em>um</em>s, which could then be displayed to 
+                the user.
+            </li>
+            <li>
+                Showing the user the topic that corresponded to each <em>thought.</em>
+            </li>
+            <li>
+                Showing the user how they transitioned from topic to topic. For example,
+                were they jumping from one topic to another, or were the topics
+                localized to specific regions of the talk.
+            </li>
+        </ol>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src='../static/js/expandable-image-modal.js'></script>
+{% endblock %}
