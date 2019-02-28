@@ -10,17 +10,27 @@ This repository contains code to generate a web app that helps people give bette
 
 ### Real time pace and speech transcription
 
+Once a user clicks record and begins talking, their speaking pace is displayed by a sliding red bar which is overlayed onto a histogram of average speaking rates for ~2500 TED talkers. Their transcript is also updated in real time and shown below their pace.
+
+![gif0](demos/streaming.gif)
+
 ### Word usage
 
-![gif1](examples/interactive_transcript.gif)
+Users can see an interactive visualization of their transcript, identify over-used words, and see where those words were spoken.
+
+![gif1](demos/interactive_transcript.gif)
 
 ### Pace over time
 
-![gif2](examples/speed_dt.gif)
+Users can see how quickly they were speaking over time and identify those areas within their transcript.
+
+![gif2](demos/speed_dt.gif)
 
 ### Topic Modeling
 
-![gif3](examples/topic_modeling.gif)
+Finally, users can set a number of target topics for their presentation and see how long they spent talking about each of those topics. The app automatically determines what topics were talked about using latent dirichlet allocation (LDA) and displays the words that are characteristic of that topic.
+
+![gif3](demos/topic_modeling.gif)
 
 ## Installation
 
